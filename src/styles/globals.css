@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --gold: #d4a017;
+    --gold-light: #edc55a;
+    --ink-900: #0f0f1a;
+    --ink-800: #161625;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #0f0f1a;
+    color: #e8e8f0;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #d4a01740;
+    color: #edc55a;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0f0f1a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #d4a017;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  .gold-gradient {
+    background: linear-gradient(135deg, #edc55a 0%, #d4a017 50%, #b8890f 100%);
+  }
+
+  .gold-text {
+    background: linear-gradient(135deg, #edc55a, #d4a017);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-gold {
+    background: rgba(212, 160, 23, 0.06);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 160, 23, 0.2);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300;
+    background: linear-gradient(135deg, #edc55a, #d4a017);
+    color: #0f0f1a;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(212, 160, 23, 0.4);
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300;
+    border: 1px solid rgba(212, 160, 23, 0.4);
+    color: #edc55a;
+  }
+
+  .btn-outline:hover {
+    background: rgba(212, 160, 23, 0.1);
+    border-color: #d4a017;
+    transform: translateY(-2px);
+  }
+
+  .section-title {
+    @apply font-display text-4xl md:text-5xl font-bold mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-gray-400 text-lg max-w-2xl;
+  }
+
+  .card {
+    @apply rounded-2xl p-6 transition-all duration-300;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(212, 160, 23, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .input-field {
+    @apply w-full rounded-xl px-4 py-3 text-white placeholder-gray-500 outline-none transition-all duration-200 font-body;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .input-field:focus {
+    border-color: rgba(212, 160, 23, 0.5);
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.1);
+  }
+
+  .noise-bg::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+}
+
+/* Animated gradient orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  animation: float 8s ease-in-out infinite;
+}
+
+.orb-gold {
+  background: radial-gradient(circle, #d4a017, transparent);
+}
+
+.orb-blue {
+  background: radial-gradient(circle, #3b4fd4, transparent);
+}
+
+/* Page transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 400ms, transform 400ms;
+}
+
+/* Tag pill */
+.tag {
+  @apply text-xs font-mono px-3 py-1 rounded-full;
+  background: rgba(212, 160, 23, 0.12);
+  color: #edc55a;
+  border: 1px solid rgba(212, 160, 23, 0.2);
+}
