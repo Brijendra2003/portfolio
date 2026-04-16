@@ -6,6 +6,7 @@ import {
   Twitter,
   Mail,
   ArrowUpRight,
+  Instagram,
 } from "lucide-react";
 
 export default function Footer() {
@@ -32,20 +33,24 @@ export default function Footer() {
             </p>
             <div className="flex gap-3 mt-6">
               {[
-                { icon: Github, href: "https://github.com", label: "GitHub" },
+                {
+                  icon: Github,
+                  href: "https://github.com/Brijendra2003",
+                  label: "GitHub",
+                },
                 {
                   icon: Linkedin,
-                  href: "https://linkedin.com",
+                  href: "https://linkedin.com/in/brijendra-tiwari-122011403",
                   label: "LinkedIn",
                 },
                 {
-                  icon: Twitter,
-                  href: "https://twitter.com",
-                  label: "Twitter",
+                  icon: Instagram,
+                  href: "https://www.instagram.com/brijendra2031?igsh=MXc3bGplZHpubndpYw==",
+                  label: "Instagram",
                 },
                 {
                   icon: Mail,
-                  href: "mailto:hello@devfolio.dev",
+                  href: "mailto:brijendratiwari993@gmail.com",
                   label: "Email",
                 },
               ].map(({ icon: Icon, href, label }) => (

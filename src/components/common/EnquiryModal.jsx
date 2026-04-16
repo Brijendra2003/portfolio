@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { X, Send, Loader2 } from 'lucide-react';
-import { useEnquiry } from '../../context/EnquiryContext';
-import { submitLead } from '../../firebase/services';
-import toast from 'react-hot-toast';
+import { useState } from "react";
+import { X, Send, Loader2 } from "lucide-react";
+import { useEnquiry } from "../../context/EnquiryContext";
+import { submitLead } from "../../firebase/services";
+import toast from "react-hot-toast";
 
-const initialForm = { name: '', email: '', phone: '', message: '' };
+const initialForm = { name: "", email: "", phone: "", message: "" };
 
 export default function EnquiryModal() {
   const { isOpen, closeEnquiry } = useEnquiry();
@@ -16,48 +16,64 @@ export default function EnquiryModal() {
 
   const validate = () => {
     const errs = {};
-    if (!form.name.trim()) errs.name = 'Name is required';
-    if (!form.email.trim()) errs.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(form.email)) errs.email = 'Invalid email';
-    if (!form.phone.trim()) errs.phone = 'Phone is required';
-    if (!form.message.trim()) errs.message = 'Message is required';
+
+    if (!form.name.trim()) errs.name = "Name is required";
+
+    if (!form.email.trim()) errs.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(form.email)) errs.email = "Invalid email";
+
+    if (!form.phone.trim()) {
+      errs.phone = "Phone is required";
+    }
+    // Indian mobile validation
+    else if (!/^[6-9]\d{9}$/.test(form.phone)) {
+      errs.phone = "Invalid mobile number";
+    }
+
+    if (!form.message.trim()) errs.message = "Message is required";
+
     return errs;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
-    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      return;
+    }
     setLoading(true);
     const result = await submitLead(form);
     setLoading(false);
     if (result.success) {
-      toast.success('Enquiry sent! I\'ll get back to you shortly.');
+      toast.success("Enquiry sent! I'll get back to you shortly.");
       setForm(initialForm);
       setErrors({});
       closeEnquiry();
     } else {
-      toast.error('Failed to send. Please try again.');
+      toast.error("Failed to send. Please try again.");
     }
   };
 
   const handleChange = (e) => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
-    if (errors[e.target.name]) setErrors(prev => ({ ...prev, [e.target.name]: '' }));
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (errors[e.target.name])
+      setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
   };
 
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-      style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)' }}
+      style={{ background: "rgba(0,0,0,0.8)", backdropFilter: "blur(8px)" }}
       onClick={(e) => e.target === e.currentTarget && closeEnquiry()}
     >
       <div
         className="w-full max-w-lg rounded-3xl p-8 relative"
         style={{
-          background: '#161625',
-          border: '1px solid rgba(212, 160, 23, 0.2)',
-          boxShadow: '0 40px 80px rgba(0,0,0,0.5), 0 0 60px rgba(212, 160, 23, 0.05)',
+          background: "#161625",
+          border: "1px solid rgba(212, 160, 23, 0.2)",
+          boxShadow:
+            "0 40px 80px rgba(0,0,0,0.5), 0 0 60px rgba(212, 160, 23, 0.05)",
         }}
       >
         {/* Close */}
@@ -74,8 +90,12 @@ export default function EnquiryModal() {
             <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
             New Enquiry
           </div>
-          <h2 className="font-display text-2xl font-bold text-white">Let's Work Together</h2>
-          <p className="text-gray-400 text-sm mt-1">Fill in the details and I'll get back to you within 24 hours.</p>
+          <h2 className="font-display text-2xl font-bold text-white">
+            Let's Work Together
+          </h2>
+          <p className="text-gray-400 text-sm mt-1">
+            Fill in the details and I'll get back to you within 24 hours.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -89,7 +109,9 @@ export default function EnquiryModal() {
                 onChange={handleChange}
                 className="input-field text-sm"
               />
-              {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
+              {errors.name && (
+                <p className="text-red-400 text-xs mt-1">{errors.name}</p>
+              )}
             </div>
             <div>
               <input
@@ -100,7 +122,9 @@ export default function EnquiryModal() {
                 onChange={handleChange}
                 className="input-field text-sm"
               />
-              {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
+              {errors.phone && (
+                <p className="text-red-400 text-xs mt-1">{errors.phone}</p>
+              )}
             </div>
           </div>
 
@@ -113,7 +137,9 @@ export default function EnquiryModal() {
               onChange={handleChange}
               className="input-field text-sm"
             />
-            {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-400 text-xs mt-1">{errors.email}</p>
+            )}
           </div>
 
           <div>
@@ -125,7 +151,9 @@ export default function EnquiryModal() {
               rows={4}
               className="input-field text-sm resize-none"
             />
-            {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message}</p>}
+            {errors.message && (
+              <p className="text-red-400 text-xs mt-1">{errors.message}</p>
+            )}
           </div>
 
           <button
@@ -134,9 +162,13 @@ export default function EnquiryModal() {
             className="btn-primary w-full justify-center text-sm py-3 disabled:opacity-70"
           >
             {loading ? (
-              <><Loader2 size={16} className="animate-spin" /> Sending...</>
+              <>
+                <Loader2 size={16} className="animate-spin" /> Sending...
+              </>
             ) : (
-              <><Send size={16} /> Send Enquiry</>
+              <>
+                <Send size={16} /> Send Enquiry
+              </>
             )}
           </button>
         </form>
